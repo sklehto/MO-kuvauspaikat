@@ -44,7 +44,7 @@ export default function App() {
   // Kuvauspaikan hakeminen:
   const getSpot = () => {
     // fetch(`https://kuvauspaikat-115c5.firebaseio.com/items/-NHAUA0WmxcRLXmy2Z8P/spot.json?access_token=<ACCESS_TOKEN>`)
-    fetch(`https://kuvauspaikat-115c5.firebaseio.com/items/-NHAUA0WmxcRLXmy2Z8P/spot.json?tag=${tag}`)
+    fetch(`https://kuvauspaikat-115c5.firebaseio.com/items.json?tag=${tag}`)
     .then(response => response.json())
     .then(items => setData(items.data))
     .catch(error => {

@@ -15,7 +15,6 @@ export default function App() {
   return (
       <NavigationContainer>
         <Stack.Navigator initialRouteName='Valokuvauspaikat muistiin'>
-        <Stack.Screen name='Etusivu' component={Home} />
           <Stack.Screen name='Etsi kuvauspaikkaa' component={SearchSpot} />
           <Stack.Screen name='Lisää kuvauspaikka' component={AddSpot} />
         </Stack.Navigator>
