@@ -1,13 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState, useEffect } from 'react';
 import { FlatList, Image, StyleSheet, Text, TextInput, View } from 'react-native';
-// import { Header } from 'react-native/Libraries/NewAppScreen';
 import { Header, Input, Button, ListItem } from 'react-native-elements';
 import { initializeApp } from "firebase/app";
 import { getDatabase, push, ref, onValue } from'firebase/database';
-
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
 // Firebasen konfigurointi ja määrittely:
 const firebaseConfig = {
@@ -43,8 +39,8 @@ export default function App() {
 
   // Kuvauspaikan hakeminen:
   const getSpot = () => {
-    // fetch(`https://kuvauspaikat-115c5.firebaseio.com/items/-NHAUA0WmxcRLXmy2Z8P/spot.json?access_token=<ACCESS_TOKEN>`)
-    fetch(`https://kuvauspaikat-115c5.firebaseio.com/items.json?tag=${tag}`)
+    fetch(`https://kuvauspaikat-115c5.firebaseio.com/items/-NHAUA0WmxcRLXmy2Z8P/spot.json?access_token=<ACCESS_TOKEN>`)
+    // fetch(`https://kuvauspaikat-115c5.firebaseio.com/items.json?tag=${tag}`)
     .then(response => response.json())
     .then(items => setData(items.data))
     .catch(error => {
@@ -58,7 +54,6 @@ export default function App() {
       const item = snapshot.val();
       const items = item ? Object.keys(item).map(key => ({ key, ...item[key] })) : [];
       setData(items);
-      // setItems(Object.values(data));
     })
   }, []);
 
@@ -67,28 +62,24 @@ export default function App() {
 
       <Header
         centerComponent={{ text: 'Valokuvauspaikat muistiin', style: {color: '#fff', height: 35, textAlignVertical: 'center',
-          fontSize: 20 }}} />
+          fontSize: 20, marginTop: -25 }}} />
       <Input
         style={styles.input}
-        // label='PAIKKAKUNTA'
         placeholder='Paikkakunta'
         onChangeText={spot => setSpot(spot)}
         value={spot} />
       <Input
         style={styles.input}
-        // label='OSOITE'
         placeholder='Katuosoite'
         onChangeText={address => setAddress(address)}
         value={address} />      
       <Input
         style={styles.input}
-        // label='HAKUKRITEERI'
-        placeholder='Luontoon/maisemaan liittyvä hakukriteeri'
+        placeholder='Luontoon/maisemaan liittyvä ominaisuus'
         onChangeText={tag => setTag(tag)}
         value={tag} />
       <Input
         style={styles.input}
-        // label='KUVAN URL'
         placeholder='Kuvan url-osoite'
         onChangeText={image => setImage(image)}
         value={image} />
@@ -99,11 +90,15 @@ export default function App() {
         <Button onPress={getSpot} title='Hae paikka' />
       </View>
 
+      <Text style={{ fontWeight: 'bold', marginTop: 40 }}>Tietoa valokuvauspaikoista</Text>
+
       <FlatList style={styles.list}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item}) =>
           <View>
-            <Text> {item.spot}, {item.address}, {item.tag} </Text>
+            <Text>Paikkakunta: {item.spot} </Text>
+            <Text>Osoite: {item.address}</Text>
+            <Text>Luontoon/maisemaan liittyvä ominaisuus: {item.tag}</Text>
             <Image style={styles.image} source={{ uri: `${item.image}` }} />
           </View>
         }
@@ -128,22 +123,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#EBEDEF',
     borderColor: 'lightgrey',
     borderWidth: 1,
-    marginTop: 25,
-    marginBottom: -35,
+    marginTop: 15,
+    marginBottom: -36,
     paddingLeft: 15,
   },
   button: {
     width: 150,
     textAlign: 'center',
-    marginTop: 40,
-    marginBottom: -25,
+    marginTop: 25,
+    marginBottom: -20,
   },
   list: {
-    marginTop: 50,
+    marginTop: 10,
   },
   image: {
-    width: 150,
-    height: 150,
+    width: 300,
+    height: 200,
     alignSelf: 'center',
+    marginTop: 5,
+    marginBottom: 15,
   },
 });
